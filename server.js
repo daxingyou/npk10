@@ -8,7 +8,7 @@ var mine = require('./mine').types;
 var path=require('path');
 var os = require('os'); 
 
-var last = null 
+var last = null
 
 function getPK10() {
     var uri = 'http://e.apiplus.net/newly.do?token=t9c95da775871eeaek&code=bjpk10&rows=1&format=json';  
@@ -16,12 +16,12 @@ function getPK10() {
         res.setEncoding('utf8');
         var cache = null
         res.on('data', (chunk) => { 
-          cache = JSON.parse(`${chunk}`)
+            cache = JSON.parse(`${chunk}`)
         });
         res.on('end', () => {
-          console.log('No more data in response.');
-          last = cache.data
-          console.log(last);  
+            console.log('No more data in response.');
+            last = cache.data
+            console.log(last);
         });  
     }).on('error', function(e) {   
         console.log("error: " + e.message);   
@@ -30,18 +30,37 @@ function getPK10() {
 
 getPK10();
 
-setTimeout(function(){  
+setInterval(function(){  
    getPK10(); 
 },15000); 
 
+
+function sendPK10(){
+    if(last==null){
+        return {};
+    } 
+}
+
 var server = http.createServer(function (request, response) {
-    var pathname = url.parse(request.url).pathname; 
-    /***
-    if (pathname.charAt(pathname.length - 1) == "/") {
-        //如果访问目录
-        pathname += "page/pk10.html"; //指定为默认网页
+
+    var pathname = url.parse(request.url).pathname;  
+    
+    console.log(pathname)
+
+    if (pathname.exists("/api/live")) {
+        //如果访问数据接口
+         // 解析 url 参数
+        var params = url.parse(request.url, true).query;  //parse将字符串转成对象,req.url="/?url=123&name=321"，true表示params是{url:"123",name:"321"}，false表示params是url=123&name=321
+        console.log("code=" + params.code + "&t=" + params.t); 
+        var retJson = JSON.stringify(sendPK10()) 
+        response.writeHead(200, {
+            'Content-Type': 'application/json'
+        });
+        response.write(retJson, "binary");
+        response.end();  
+        return 
     }   
-    ***/
+
     var realPath = path.join("static", pathname);
     console.log(realPath);
     var ext = path.extname(realPath);
@@ -77,11 +96,9 @@ function getIPv4(){
     var interfaces = os.networkInterfaces();//获取网络接口列表 
     var ipv4s = [];//同一接口可能有不止一个IP4v地址，所以用数组存
     Object.keys(interfaces).forEach(function (key){
-        interfaces[key].forEach(function (item){
-    
+        interfaces[key].forEach(function (item){ 
             //跳过IPv6 和 '127.0.0.1'
-            if ( 'IPv4' !== item.family || item.internal !== false )return;
-    
+            if ( 'IPv4' !== item.family || item.internal !== false )return; 
             ipv4s.push(item.address);//可用的ipv4s加入数组
             console.log(key+'--'+item.address);
         })        
@@ -89,8 +106,6 @@ function getIPv4(){
     return ipv4s[0];//返回一个可用的即可
 } 
 
-server.listen(PORT,function (){ 
-    console.log('Server start on: '+getIPv4()+':'+PORT+"."); 
-});
+server.listen(PORT,'0.0.0.0');
 
 
