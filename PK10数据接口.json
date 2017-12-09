@@ -1,0 +1,48 @@
+//PK10数据接口
+
+//API http://游戏服务器域名/api/live?code=pk10&t=请求时间戳
+//code: 游戏类型:pk10表示游戏
+//t   : 时间戳，防缓存数据
+
+//接口返回数据格式
+
+{
+    "time":服务器当前时间戳(秒),
+    "current":{                 //当前期数据
+        "periodNumber":"期号NO",
+        "period":"期号NO",
+        "periodDate":"期号NO",
+        "awardTime":"开奖时间",
+        "awardNumbers":"开奖号码排序"
+    },
+    "next":{                    //下一期数据
+        "periodNumber":"期号NO",
+        "period":"期号NO",
+        "periodDate":"期号NO",
+        "awardTime":"开奖时间",
+        "awardTimeInterval":距离开奖剩余时间（秒）,
+        "delayTimeInterval":请求频率（固定填写10）
+    }
+}
+
+
+
+
+
+
+
+//下面是参考数据格式例子
+{"time":1512277622,"current":{"periodNumber":"654080","period":"654080","periodDate":"654080","awardTime":"2017-12-03 13:02:00","awardNumbers":"5,10,2,9,3,1,8,7,4,6"},"next":{"periodNumber":"654082","period":"654082","periodDate":"654082","awardTime":"2017-12-03 13:12:00","awardTimeInterval":-298000,"delayTimeInterval":10}}
+{"time":1512277623,"current":{"periodNumber":"654080","period":"654080","periodDate":"654080","awardTime":"2017-12-03 13:02:00","awardNumbers":"5,10,2,9,3,1,8,7,4,6"},"next":{"periodNumber":"654082","period":"654082","periodDate":"654082","awardTime":"2017-12-03 13:12:00","awardTimeInterval":-297000,"delayTimeInterval":10}}
+{"time":1512277624,"current":{"periodNumber":"654080","period":"654080","periodDate":"654080","awardTime":"2017-12-03 13:02:00","awardNumbers":"5,10,2,9,3,1,8,7,4,6"},"next":{"periodNumber":"654082","period":"654082","periodDate":"654082","awardTime":"2017-12-03 13:12:00","awardTimeInterval":-296000,"delayTimeInterval":10}}
+{"time":1512277625,"current":{"periodNumber":"654080","period":"654080","periodDate":"654080","awardTime":"2017-12-03 13:02:00","awardNumbers":"5,10,2,9,3,1,8,7,4,6"},"next":{"periodNumber":"654082","period":"654082","periodDate":"654082","awardTime":"2017-12-03 13:12:00","awardTimeInterval":-295000,"delayTimeInterval":10}}
+{"time":1512277626,"current":{"periodNumber":"654080","period":"654080","periodDate":"654080","awardTime":"2017-12-03 13:02:00","awardNumbers":"5,10,2,9,3,1,8,7,4,6"},"next":{"periodNumber":"654082","period":"654082","periodDate":"654082","awardTime":"2017-12-03 13:12:00","awardTimeInterval":-294000,"delayTimeInterval":10}}
+.
+.
+.
+{"time":1512277655,"current":{"periodNumber":"654080","period":"654080","periodDate":"654080","awardTime":"2017-12-03 13:02:00","awardNumbers":"5,10,2,9,3,1,8,7,4,6"},"next":{"periodNumber":"654082","period":"654082","periodDate":"654082","awardTime":"2017-12-03 13:12:00","awardTimeInterval":-265000,"delayTimeInterval":10}}
+{"time":1512277656,"current":{"periodNumber":"654080","period":"654080","periodDate":"654080","awardTime":"2017-12-03 13:02:00","awardNumbers":"5,10,2,9,3,1,8,7,4,6"},"next":{"periodNumber":"654082","period":"654082","periodDate":"654082","awardTime":"2017-12-03 13:12:00","awardTimeInterval":-264000,"delayTimeInterval":10}}
+{"time":1512277657,"current":{"periodNumber":"654080","period":"654080","periodDate":"654080","awardTime":"2017-12-03 13:02:00","awardNumbers":"5,10,2,9,3,1,8,7,4,6"},"next":{"periodNumber":"654082","period":"654082","periodDate":"654082","awardTime":"2017-12-03 13:12:00","awardTimeInterval":-263000,"delayTimeInterval":10}}
+{"time":1512277659,"current":{"periodNumber":"654080","period":"654080","periodDate":"654080","awardTime":"2017-12-03 13:02:00","awardNumbers":"5,10,2,9,3,1,8,7,4,6"},"next":{"periodNumber":"654082","period":"654082","periodDate":"654082","awardTime":"2017-12-03 13:12:00","awardTimeInterval":-261000,"delayTimeInterval":10}}
+{"time":1512277660,"current":{"periodNumber":"654081","period":"654081","periodDate":"654081","awardTime":"2017-12-03 13:07:00","awardNumbers":"7,2,6,3,10,4,1,8,9,5"},"next":{"periodNumber":"654082","period":"654082","periodDate":"654082","awardTime":"2017-12-03 13:12:00","awardTimeInterval":260000,"delayTimeInterval":10}}
+
