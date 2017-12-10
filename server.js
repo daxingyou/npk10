@@ -36,7 +36,7 @@ var server = http.createServer(function (request, response) {
                     response.writeHead(500, {
                         'Content-Type': 'text/plain'
                     });
-                    response.end(err);
+                    response.end();
                 } else {
                     var contentType = mine[ext] || "text/plain";
                     response.writeHead(200, {
