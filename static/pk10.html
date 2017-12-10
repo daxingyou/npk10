@@ -150,8 +150,8 @@
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
             var r = window.location.search.substr(1).match(reg);
             if (r!=null) return decodeURIComponent((r[2])); return null;
-        }
-        var base = geturlstr('base'), cdn = null;
+        }   
+        var base = geturlstr('base'), cdn = null; 
     </script>
     <script type="text/javascript" src="/build/js/plugin/require.js" data-main="/build/js/page/common.js"></script> 
     <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="common" src="/build/js/page/common.js"></script>
@@ -159,6 +159,8 @@
     <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="jquery" src="/build/js/plugin/jquery.js"></script>
     <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="TweenMax" src="/build/js/plugin/tweenmax.js"></script>
     
+    <!--
     <script type="text/javascript">require(['pk10']);</script>
+    -->
 
 </body></html>

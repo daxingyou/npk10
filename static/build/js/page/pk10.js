@@ -22,23 +22,15 @@ require(["global", "TweenMax"], function (r, t) {
             }
             $(".drawing-video .next").html(t.next.period)
         }, get_lottery: function (r, t) {
-            /*** 
-            var e = (new Date).getTime();  
+            var e = (new Date).getTime();
             $.ajax({
                 url: base!=null?base:"" + "/api/live?code=" + r + "&t=" + e,
                 method: "get",
                 success: function (e) {   
                     var n = e.current.period ? parseInt(e.next.period) - parseInt(e.current.period) : 0;
                     t ? 1 == n || 0 == n ? (a.run_result(e.current.awardNumbers.split(",")), a.render_result(r, e)) : a.retry(r, !0) : (a.render_result(r, e), 2 == n && a.retry(r, !1))
-                }
+                }   
             })  
-            ***/
-
-            var time = Math.floor((new Date).getTime()/1000);
-            var e = {"time":time,"current":{"periodNumber":"654081","period":"654081","periodDate":"654081","awardTime":"2017-12-03 13:07:00","awardNumbers":"7,2,6,3,10,4,1,8,9,5"},"next":{"periodNumber":"654082","period":"654082","periodDate":"654082","awardTime":"2017-12-03 13:12:00","awardTimeInterval":30000,"delayTimeInterval":10}}
-            var n = e.current.period ? parseInt(e.next.period) - parseInt(e.current.period) : 0;
-            t ? 1 == n || 0 == n ? (a.run_result(e.current.awardNumbers.split(",")), a.render_result(r, e)) : a.retry(r, !0) : (a.render_result(r, e), 2 == n && a.retry(r, !1))
-
         }, retry: function (r, t) {
             clearTimeout(a.timer.retry), a.timer.retry = setTimeout(function () {
                 a.get_lottery(r, t)

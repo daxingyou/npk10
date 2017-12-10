@@ -16,8 +16,7 @@ require.config({
         trend: "page/trend",
         dewdrop: "page/dewdrop",
         lottery: "page/lottery",
-        pk10: "page/pk10",
-        jspk10: "page/jspk10"
+        pk10: "page/pk10", 
     },
     shim: {
         layload: {
