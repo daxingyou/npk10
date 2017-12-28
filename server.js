@@ -73,20 +73,12 @@ var CURRENT = {
     periodDate:0,
     awardTime:'',
     awardNumbers:''
-}
+} 
 
-var PERIOD = {                
-    periodNumber:0,
-    period:0,
-    periodDate:0,
-    awardTime:'',
-    awardNumbers:''
-}
-
-var opentimestamp = 0 
+var opentimestamp = 0  
 
 function getPK10() {
-    var uri = 'http://e.apiplus.net/newly.do?token=t9c95da775871eeaek&code=bjpk10&rows=2&format=json';  
+    var uri = 'http://e.apiplus.net/newly.do?token=t9c95da775871eeaek&code=bjpk10&rows=1&format=json';  
     http.get(uri, function(res) {    
         res.setEncoding('utf8');
         var cache = null
@@ -102,15 +94,7 @@ function getPK10() {
             CURRENT.awardNumbers = d.opencode.split(",").map(function(a){
                 return Number.parseInt(a)
             }).join(',')  
-            opentimestamp = d.opentimestamp  
-            d = cache.data[1]
-            PERIOD.periodNumber = d.expect
-            PERIOD.period = d.expect
-            PERIOD.periodDate = d.expect
-            PERIOD.awardTime = d.opentime  
-            PERIOD.awardNumbers = d.opencode.split(",").map(function(a){
-                return Number.parseInt(a)
-            }).join(',')
+            opentimestamp = d.opentimestamp   
         }); 
     }).on('error', function(e) {   
         console.log("error: " + e.message);   
@@ -120,22 +104,27 @@ function getPK10() {
 function sendPK10(){ 
     //系统时间毫秒
     var _time = new Date().getTime(); 
-    var s_time = Math.floor(_time/1000); //服务器时间 
-    var curent = CURRENT 
+    var s_time = Math.floor(_time/1000); //服务器时间  
     //倒计时秒数（下一次开奖比赛的时间差值）
-    var n_interval = Math.floor((new Date((opentimestamp+315)*1000).getTime()-_time)/1000)*1000
-    var n_date = new Date((opentimestamp+300)*1000);//下次开奖时间 
-    //当前这一期开奖时间与当前服务器时间差值，如果相遇在30秒以内就表示当前正在播放比赛视频
-    if(s_time-opentimestamp<30){
-        //取上一次的比赛数据为当前期
-        curent = PERIOD   
-        n_interval -= 300000 
+    var n_interval = Math.floor((new Date((opentimestamp+270)*1000).getTime()-_time)/1000)*1000 
+    var n_no = 0 
+    var n_date = null 
+    //当前这一期开奖时间与当前服务器时间差值，如果相遇在30秒以内就表示当前正在播放比赛视频  
+    if(n_interval<=0){ 
+        n_interval = Math.abs(n_interval)-300000
+        n_no = (Number.parseInt(CURRENT.periodNumber) + 2)+""  
+        n_date = new Date((opentimestamp+600)*1000);//下次开奖时间  
+    }else{  
+        n_no = (Number.parseInt(CURRENT.periodNumber) + 1)+""  
+        n_date = new Date((opentimestamp+300)*1000);//下次开奖时间  
     }   
+    
     var n_awardTime = n_date.getFullYear()+"-"+(n_date.getMonth()+1)+"-"+n_date.getDate()+" "+n_date.getHours()+":"+n_date.getMinutes()+":"+n_date.getSeconds();
-    var n_no = (Number.parseInt(CURRENT.periodNumber) + 1)+""
+    
+    //下一期编号 
     var retData = {
         'time':s_time,
-        'current': curent,  
+        'current': CURRENT,  
         'next': {           
             'periodNumber':n_no,
             'period':n_no,
